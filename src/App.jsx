@@ -52,17 +52,29 @@ function App() {
                 {transactions.length === 0 ? (
                   <p className="text-gray-500">Пока нет транзакций.</p>
                 ) : (
-                  <table className="w-full text-left border-collapse">
-                    <thead>
-                      <tr>
-                        <th className="border-b p-2">Дата</th>
-                        <th className="border-b p-2">Тип</th>
-                        <th className="border-b p-2">Сумма</th>
-                        <th className="border-b p-2">Категория</th>
-                        <th className="border-b p-2">Комментарий</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+             <table className="styled-table">
+  <thead>
+    <tr>
+      <th>Дата</th>
+      <th>Тип</th>
+      <th>Сумма</th>
+      <th>Категория</th>
+      <th>Комментарий</th>
+    </tr>
+  </thead>
+  <tbody>
+    {transactions.map((tx, index) => (
+      <tr key={index}>
+        <td>{tx.date}</td>
+        <td>{tx.type === 'income' ? 'Доход' : 'Расход'}</td>
+        <td>{tx.amount} руб.</td>
+        <td>{tx.category}</td>
+        <td>{tx.comment}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
                       {transactions.map((tx, index) => (
                         <tr key={index}>
                           <td className="border-b p-2">{tx.date}</td>
