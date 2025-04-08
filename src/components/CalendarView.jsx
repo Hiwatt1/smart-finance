@@ -6,10 +6,11 @@ import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import ru from 'date-fns/locale/ru';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const locales = {
-  'ru-RU': require('date-fns/locale/ru')
+  'ru-RU': ru
 };
 
 const localizer = dateFnsLocalizer({
