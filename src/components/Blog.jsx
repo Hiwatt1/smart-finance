@@ -24,34 +24,34 @@ const Blog = () => {
       <h1 className="text-4xl font-bold mb-6">Блог</h1>
 
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow space-y-4 mb-8">
-        <div>
-          <label className="block text-sm font-semibold mb-1">Заголовок</label>
+        <div className="space-y-1">
+          <label className="block text-sm font-semibold">Заголовок</label>
           <input
             type="text"
             name="title"
-            placeholder="Заголовок"
             value={formData.title}
             onChange={handleChange}
+            placeholder="Введите заголовок"
             className="w-full border border-gray-300 rounded p-2"
             required
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-semibold mb-1">Текст записи</label>
+        <div className="space-y-1">
+          <label className="block text-sm font-semibold">Текст записи</label>
           <textarea
             name="content"
-            placeholder="Текст записи"
             value={formData.content}
             onChange={handleChange}
-            rows="5"
+            placeholder="Введите текст записи"
             className="w-full border border-gray-300 rounded p-2"
+            rows="4"
             required
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-semibold mb-1">Дата</label>
+        <div className="space-y-1">
+          <label className="block text-sm font-semibold">Дата</label>
           <input
             type="date"
             name="date"
@@ -64,7 +64,7 @@ const Blog = () => {
 
         <button
           type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full"
+          className="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition"
         >
           Добавить запись
         </button>
