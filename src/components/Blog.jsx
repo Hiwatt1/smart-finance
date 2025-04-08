@@ -1,6 +1,4 @@
-
 import { useState } from 'react';
-import './Blog.css'; // если надо, можно подключить стили отдельно
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
