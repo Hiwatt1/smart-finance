@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 
-const TransactionForm = () => {
+const TransactionForm = ({ onAdd }) => {
   const [formData, setFormData] = useState({
     date: '',
     amount: '',
@@ -16,7 +16,7 @@ const TransactionForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Добавлена транзакция:\n' + JSON.stringify(formData, null, 2));
+    onAdd(formData);
     setFormData({
       date: '',
       amount: '',
