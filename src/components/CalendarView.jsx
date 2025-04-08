@@ -74,7 +74,9 @@ const CalendarView = () => {
         endAccessor="end"
         style={{ height: '100%' }}
         selectable
+        views={['month']} // Убираем все вкладки кроме "month"
         onSelectSlot={handleDateSelect}
+        culture="ru-RU"
       />
       <Modal isOpen={showModal} onRequestClose={() => setShowModal(false)} className="modal" overlayClassName="overlay">
         <h2 className="text-xl font-semibold mb-4">Добавить транзакцию</h2>
