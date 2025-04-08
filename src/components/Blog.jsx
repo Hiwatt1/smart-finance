@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const API_URL = 'https://db-0p58.onrender.com/blog-posts';
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
@@ -8,15 +11,32 @@ const Blog = () => {
     date: ''
   });
 
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const res = await axios.get(API_URL);
+      setPosts(res.data);
+    } catch (err) {
+      console.error('Ошибка при получении записей:', err);
+    }
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newPost = { ...formData, id: Date.now() };
-    setPosts([newPost, ...posts]);
-    setFormData({ title: '', content: '', date: '' });
+    try {
+      const res = await axios.post(API_URL, formData);
+      setPosts([res.data, ...posts]);
+      setFormData({ title: '', content: '', date: '' });
+    } catch (err) {
+      console.error('Ошибка при добавлении записи:', err);
+    }
   };
 
   return (
