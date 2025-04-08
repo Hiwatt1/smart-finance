@@ -13,7 +13,8 @@ function App() {
 
   const fetchTransactions = async () => {
     const res = await axios.get('https://db-0p58.onrender.com/transactions');
-    setTransactions(res.data);
+    const sortedTransactions = res.data.sort((a, b) => new Date(b.date) - new Date(a.date)); // сортировка от новой к старой
+    setTransactions(sortedTransactions);
   };
 
   const addTransaction = (tx) => {
@@ -52,24 +53,24 @@ function App() {
                 {transactions.length === 0 ? (
                   <p className="text-gray-500">Пока нет транзакций.</p>
                 ) : (
-                  <table className="w-full text-left border-collapse">
+                  <table className="styled-expense-table">
                     <thead>
                       <tr>
-                        <th className="border-b p-2">Дата</th>
-                        <th className="border-b p-2">Тип</th>
-                        <th className="border-b p-2">Сумма</th>
-                        <th className="border-b p-2">Категория</th>
-                        <th className="border-b p-2">Комментарий</th>
+                        <th>Дата</th>
+                        <th>Тип</th>
+                        <th>Сумма</th>
+                        <th>Категория</th>
+                        <th>Комментарий</th>
                       </tr>
                     </thead>
                     <tbody>
                       {transactions.map((tx, index) => (
                         <tr key={index}>
-                          <td className="border-b p-2">{tx.date}</td>
-                          <td className="border-b p-2">{tx.type === 'income' ? 'Доход' : 'Расход'}</td>
-                          <td className="border-b p-2">{tx.amount} руб.</td>
-                          <td className="border-b p-2">{tx.category}</td>
-                          <td className="border-b p-2">{tx.comment}</td>
+                          <td>{tx.date}</td>
+                          <td>{tx.type === 'income' ? 'Доход' : 'Расход'}</td>
+                          <td>{tx.amount} руб.</td>
+                          <td>{tx.category}</td>
+                          <td>{tx.comment}</td>
                         </tr>
                       ))}
                     </tbody>

@@ -33,7 +33,7 @@ const TransactionForm = ({ onAdd }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="blog-form">
+    <form onSubmit={handleSubmit} className="transaction-form">
       <div className="form-group">
         <label>Тип</label>
         <select name="type" value={formData.type} onChange={handleChange}>
@@ -41,27 +41,22 @@ const TransactionForm = ({ onAdd }) => {
           <option value="expense">Расход</option>
         </select>
       </div>
-
       <div className="form-group">
         <label>Сумма</label>
         <input type="number" name="amount" value={formData.amount} onChange={handleChange} required />
       </div>
-
       <div className="form-group">
         <label>Категория</label>
         <input type="text" name="category" value={formData.category} onChange={handleChange} required />
       </div>
-
       <div className="form-group">
         <label>Комментарий</label>
         <input type="text" name="comment" value={formData.comment} onChange={handleChange} />
       </div>
-
       <div className="form-group">
         <label>Дата</label>
         <input type="date" name="date" value={formData.date} onChange={handleChange} required />
       </div>
-
       <button type="submit">Добавить транзакцию</button>
     </form>
   );
