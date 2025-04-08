@@ -4,43 +4,65 @@ import axios from 'axios';
 
 const TransactionForm = ({ onAdd }) => {
   const [formData, setFormData] = useState({
-    date: '',
+    type: 'income',
     amount: '',
-    type: 'expense',
     category: '',
-    comment: ''
+    comment: '',
+    date: ''
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.post('https://db-0p58.onrender.com/transactions', formData);
-    onAdd(res.data);
-    setFormData({
-      date: '',
-      amount: '',
-      type: 'expense',
-      category: '',
-      comment: ''
-    });
+    try {
+      const res = await axios.post('https://db-0p58.onrender.com/transactions', formData);
+      onAdd(res.data);
+      setFormData({
+        type: 'income',
+        amount: '',
+        category: '',
+        comment: '',
+        date: ''
+      });
+    } catch (err) {
+      alert('Ошибка при добавлении транзакции');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 bg-white p-4 rounded shadow">
-      <input type="date" name="date" value={formData.date} onChange={handleChange} className="p-2 rounded w-full" required />
-      <input type="number" name="amount" placeholder="Сумма" value={formData.amount} onChange={handleChange} className="p-2 rounded w-full" required />
-      <select name="type" value={formData.type} onChange={handleChange} className="p-2 rounded w-full">
-        <option value="income">Доход</option>
-        <option value="expense">Расход</option>
-      </select>
-      <input type="text" name="category" placeholder="Категория" value={formData.category} onChange={handleChange} className="p-2 rounded w-full" required />
-      <input type="text" name="comment" placeholder="Комментарий" value={formData.comment} onChange={handleChange} className="p-2 rounded w-full" />
-      <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600">
-        Добавить
-      </button>
+    <form onSubmit={handleSubmit} className="blog-form">
+      <div className="form-group">
+        <label>Тип</label>
+        <select name="type" value={formData.type} onChange={handleChange}>
+          <option value="income">Доход</option>
+          <option value="expense">Расход</option>
+        </select>
+      </div>
+
+      <div className="form-group">
+        <label>Сумма</label>
+        <input type="number" name="amount" value={formData.amount} onChange={handleChange} required />
+      </div>
+
+      <div className="form-group">
+        <label>Категория</label>
+        <input type="text" name="category" value={formData.category} onChange={handleChange} required />
+      </div>
+
+      <div className="form-group">
+        <label>Комментарий</label>
+        <input type="text" name="comment" value={formData.comment} onChange={handleChange} />
+      </div>
+
+      <div className="form-group">
+        <label>Дата</label>
+        <input type="date" name="date" value={formData.date} onChange={handleChange} required />
+      </div>
+
+      <button type="submit">Добавить транзакцию</button>
     </form>
   );
 };
