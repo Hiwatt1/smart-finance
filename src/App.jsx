@@ -1,12 +1,15 @@
 
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import TransactionForm from './components/TransactionForm';
 import Blog from './components/Blog';
+import Login from './components/Login';
+import Register from './components/Register';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function App() {
+function App() {
   const [transactions, setTransactions] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const fetchTransactions = async () => {
     const res = await axios.get('https://db-0p58.onrender.com/transactions');
@@ -19,15 +22,26 @@ export default function App() {
 
   useEffect(() => {
     fetchTransactions();
+    const user = localStorage.getItem('user');
+    if (user) {
+      setIsLoggedIn(true);
+    }
   }, []);
 
   return (
     <Router>
-      <div className="container mx-auto max-w-2xl">
-        <nav className="flex justify-center gap-6 mb-8 bg-white p-4 rounded shadow">
+      <div className="container mx-auto max-w-2xl px-4">
+        <nav className="flex flex-col gap-3 mb-6 bg-white p-4 rounded shadow text-center">
           <Link to="/" className="text-blue-600 hover:underline">Учёт</Link>
           <Link to="/blog" className="text-blue-600 hover:underline">Блог</Link>
+          {!isLoggedIn && (
+            <>
+              <Link to="/login" className="text-blue-600 hover:underline">Вход</Link>
+              <Link to="/register" className="text-blue-600 hover:underline">Регистрация</Link>
+            </>
+          )}
         </nav>
+
         <Routes>
           <Route path="/" element={
             <>
@@ -64,9 +78,13 @@ export default function App() {
               </div>
             </>
           } />
-          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog" element={isLoggedIn ? <Blog /> : <Navigate to="/login" />} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
     </Router>
   );
 }
+
+export default App;
